@@ -21,12 +21,12 @@ const covid19ImpactEstimator = (data) => {
   // since the number of currently infected people doubles every 3 days.
   impact.infectionsByRequestedTime = impact.currentlyInfected * 512;
   severeImpact.infectionsByRequestedTime = severeImpact.currentlyInfected * 512;
-  // Normalizing the duration input to 'days'
-  if (inputData.periodType === 'weeks') {
-    inputData.timeToElapse = 7;
-  } else if (inputData.periodType === 'months') {
-    inputData.timeToElapse = 30;
-  }
+  // // Normalizing the duration input to 'days'
+  // if (inputData.periodType === 'weeks') {
+  //   inputData.timeToElapse = 7;
+  // } else if (inputData.periodType === 'months') {
+  //   inputData.timeToElapse = 30;
+  // }
   // output data-structure
   return {
     data,
@@ -34,5 +34,6 @@ const covid19ImpactEstimator = (data) => {
     severeImpact
   };
 };
+
 
 export default covid19ImpactEstimator;
