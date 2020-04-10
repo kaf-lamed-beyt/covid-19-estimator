@@ -12,20 +12,26 @@ const covid19ImpactEstimator = (data) => {
     population: 66622705,
     totalHospitalBeds: 1380614
   };
+  // computation objects storage.
+  const impact = {};
+  const severeImpact = {};
+
+  impact.currentlyInfected = inputData.reportedCases * 10;
+  severeImpact.currentlyInfected = inputData.reportedCases * 50;
+  // since the number of currently infected people doubles every 3 days.
+  impact.infectionsByRequestedTime = impact.currentlyInfected * 512;
+  severeImpact.infectionsByRequestedTime = severeImpact.currentlyInfected * 512;
+  // Normalizing the duration input to 'days'
+  if (inputData.periodType === 'weeks') {
+    inputData.timeToElapse = 7;
+  } else if (inputData.periodType === 'months') {
+    inputData.timeToElapse = 30;
+  }
+  // output data-structure
   return {
     data,
-    impact: {
-      currentlyInfected: inputData.reportedCases * 10,
-      /* Since currently infected people doubles every 3 days
-      * estimating the number of infected people 28 days from now
-      * where the factor is 9, neglecting the floating point
-      */
-      infectionsByRequestedTime: ['currentlyInfected'] * 512
-    },
-    severeImpact: {
-      currentlyInfected: inputData.reportedCases * 50, // 50 more people get infected everyday
-      infectionsByRequestedTime: ['currentlyInfected'] * 512
-    }
+    impact,
+    severeImpact
   };
 };
 
